@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario de Siembra de Hortalizas — Loma Verde, Escobar</title>
+<style>
+  :root {
+    --bg:        #f8f6f1;
+    --card:      #ffffff;
+    --ink:       #1c1917;
+    --muted:     #57534e;
+    --rule:      #e7e5e4;
+    --primary:   #2d5016;
+    --primary-2: #436b1c;
+    --accent:    #c2410c;
+
+    --c-S: #f59e0b;  /* siembra invernadero — ámbar */
+    --c-T: #65a30d;  /* trasplante — verde lima */
+    --c-D: #15803d;  /* siembra directa — verde */
+    --c-P: #92400e;  /* plantar tubérculos/coronas — marrón */
+    --c-C: #c2410c;  /* cosecha — terracota */
+    --c-G: #d6d3d1;  /* en crecimiento */
+    --c-E: #fafaf9;  /* vacío */
+
+    --s-verano:    #fde68a;
+    --s-otono:     #fed7aa;
+    --s-invierno:  #cbd5e1;
+    --s-primavera: #bbf7d0;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.55;
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  /* ---------- Header ---------- */
+  header.hero {
+    margin-bottom: 32px;
+  }
+  header.hero .kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  header.hero h1 {
+    font-size: 36px;
+    line-height: 1.15;
+    margin: 0 0 8px;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+  }
+  header.hero .subtitle {
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 720px;
+  }
+
+  /* ---------- Banner clima ---------- */
+  .climate-banner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 28px 0 32px;
+  }
+  .climate-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .climate-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .climate-card .value {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 15px;
+  }
+  .climate-card.warn { border-left: 3px solid var(--accent); }
+  .climate-card.safe { border-left: 3px solid var(--primary-2); }
+
+  /* ---------- Secciones ---------- */
+  section { margin: 40px 0; }
+  section h2 {
+    font-size: 22px;
+    color: var(--primary);
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  section .section-lead {
+    color: var(--muted);
+    margin: 0 0 18px;
+    font-size: 14px;
+  }
+
+  /* ---------- Referencias ---------- */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px 0 18px;
+  }
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    padding: 6px 12px 6px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .legend-swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    color: white;
+  }
+
+  /* ---------- Cuadro del calendario ---------- */
+  .calendar-wrap {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--rule);
+    padding: 18px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  table.calendar {
+    border-collapse: separate;
+    border-spacing: 4px;
+    width: 100%;
+    min-width: 760px;
+  }
+  table.calendar th, table.calendar td {
+    padding: 0;
+    text-align: center;
+    font-size: 13px;
+  }
+  table.calendar thead .season th {
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 0;
+    border-radius: 6px;
+    color: #1c1917;
+    background: var(--c-E);
+  }
+  table.calendar thead .season .verano    { background: var(--s-verano); }
+  table.calendar thead .season .otono     { background: var(--s-otono); }
+  table.calendar thead .season .invierno  { background: var(--s-invierno); }
+  table.calendar thead .season .primavera { background: var(--s-primavera); }
+
+  table.calendar thead .months th {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--muted);
+    padding: 8px 0 12px;
+  }
+  table.calendar tbody th.crop {
+    text-align: left;
+    padding: 0 14px 0 6px;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 14px;
+    min-width: 170px;
+    white-space: nowrap;
+  }
+  table.calendar tbody th.crop a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rule);
+  }
+  table.calendar tbody th.crop a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  table.calendar tbody td {
+    height: 36px;
+    width: 56px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  td.cell-S { background: var(--c-S); color: #1c1917; }
+  td.cell-T { background: var(--c-T); color: white; }
+  td.cell-D { background: var(--c-D); color: white; }
+  td.cell-P { background: var(--c-P); color: white; }
+  td.cell-C { background: var(--c-C); color: white; }
+  td.cell-G { background: var(--c-G); color: var(--muted); }
+  td.cell-E { background: var(--c-E); color: transparent; }
+  td.cell-DT {
+    background: linear-gradient(135deg, var(--c-D) 50%, var(--c-T) 50%);
+    color: white;
+    font-size: 11px;
+  }
+  td.cell-PC {
+    background: linear-gradient(135deg, var(--c-P) 50%, var(--c-C) 50%);
+    color: white;
+    font-size: 11px;
+  }
+
+  /* ---------- Banner pH ---------- */
+  .ph-banner {
+    background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin: 32px 0;
+    border: 1px solid #fcd34d;
+  }
+  .ph-banner h3 {
+    margin: 0 0 10px;
+    color: #78350f;
+    font-size: 18px;
+  }
+  .ph-banner p { margin: 6px 0; color: #57534e; }
+  .ph-banner ul { margin: 8px 0 0 18px; padding: 0; color: #57534e; }
+  .ph-banner li { margin: 4px 0; }
+  .ph-banner strong { color: #78350f; }
+
+  /* ---------- Tres Hermanas destacado ---------- */
+  .featured {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+    color: #f5f5f4;
+    border-radius: 14px;
+    padding: 28px;
+    margin: 32px 0;
+  }
+  .featured h3 {
+    margin: 0 0 4px;
+    color: #fef3c7;
+    font-size: 22px;
+  }
+  .featured .featured-sub {
+    color: #d6d3d1;
+    margin: 0 0 16px;
+    font-size: 14px;
+  }
+  .featured .sisters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .sister-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    backdrop-filter: blur(4px);
+  }
+  .sister-card h4 {
+    margin: 0 0 6px;
+    color: #fef3c7;
+    font-size: 15px;
+  }
+  .sister-card p {
+    margin: 0;
+    font-size: 13px;
+    color: #e7e5e4;
+    line-height: 1.5;
+  }
+
+  /* ---------- Fichas de cultivo ---------- */
+  .crop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 18px;
+  }
+  .crop-card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--rule);
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    scroll-margin-top: 16px;
+  }
+  .crop-card h3 {
+    margin: 0 0 4px;
+    color: var(--primary);
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .crop-card .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+  }
+  .crop-card .crop-window {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+  .crop-card dl { margin: 0; }
+  .crop-card dt {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-top: 12px;
+  }
+  .crop-card dd {
+    margin: 4px 0 0;
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .crop-card dt:first-child { margin-top: 0; }
+
+  /* ---------- Acciones mensuales ---------- */
+  .monthly {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .month-card {
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid var(--rule);
+    padding: 14px 16px;
+    border-top: 4px solid var(--primary-2);
+  }
+  .month-card.verano    { border-top-color: #d97706; }
+  .month-card.otono     { border-top-color: #c2410c; }
+  .month-card.invierno  { border-top-color: #475569; }
+  .month-card.primavera { border-top-color: #15803d; }
+  .month-card h4 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    color: var(--primary);
+  }
+  .month-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* ---------- Impresión ---------- */
+  @media print {
+    body { background: white; font-size: 11pt; }
+    .container { max-width: none; padding: 0; }
+    .featured { background: #2d5016 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .calendar-wrap, .crop-card, .month-card, .climate-card, .ph-banner {
+      box-shadow: none;
+      page-break-inside: avoid;
+    }
+    table.calendar td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="hero">
+    <div class="kicker">Planificación de la huerta · Loma Verde, Escobar</div>
+    <h1>Calendario de Siembra de Hortalizas</h1>
+    <p class="subtitle">
+      Referencia anual para campo abierto pampeano a latitud ~-34.35.
+      Ajustado a una ventana de heladas más larga que la ciudad de
+      Buenos Aires y a las realidades de un sitio plano propenso a
+      bolsones de frío.
+    </p>
+  </header>
+
+  <div class="climate-banner">
+    <div class="climate-card warn">
+      <div class="label">Primera helada</div>
+      <div class="value">Principios a mediados de mayo</div>
+    </div>
+    <div class="climate-card warn">
+      <div class="label">Última helada</div>
+      <div class="value">Mediados a fines de septiembre</div>
+    </div>
+    <div class="climate-card safe">
+      <div class="label">Fecha segura de trasplante</div>
+      <div class="value">Después del 1° de oct (nov para morrón / berenjena)</div>
+    </div>
+    <div class="climate-card">
+      <div class="label">pH del suelo (medido)</div>
+      <div class="value">~8 (alcalino) — ver notas</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Cómo leer el calendario</h2>
+    <p class="section-lead">Cada celda indica qué hacer con ese cultivo en ese mes. Tocá el nombre de un cultivo para saltar a su ficha.</p>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-S); color:#1c1917">S</span>Sembrar plantines (invernadero)</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-T)">T</span>Trasplantar al cantero</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-D)">D</span>Siembra directa</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-P)">P</span>Plantar coronas / tubérculos</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-C)">C</span>Cosecha</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-G); color:var(--muted)">·</span>En crecimiento</span>
+    </div>
+  </section>
+
+  <div class="calendar-wrap">
+    <table class="calendar">
+      <thead>
+        <tr class="season">
+          <th></th>
+          <th class="verano" colspan="2">Verano</th>
+          <th class="otono" colspan="3">Otoño</th>
+          <th class="invierno" colspan="3">Invierno</th>
+          <th class="primavera" colspan="3">Primavera</th>
+          <th class="verano">Ver</th>
+        </tr>
+        <tr class="months">
+          <th></th>
+          <th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th>
+          <th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <th class="crop"><a href="#maiz">Maíz</a></th>
+          <td class="cell-G">·</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#porotos">Porotos (guía)</a></th>
+          <td class="cell-G">·</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#zapallo">Zapallo / calabaza</a></th>
+          <td class="cell-G">·</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td>
+          <td class="cell-C">C</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-T">T</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#luffa">Luffa (esponja)</a></th>
+          <td class="cell-G">·</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td>
+          <td class="cell-C">C</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-T">T</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#zapallito">Zapallito</a></th>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td>
+          <td class="cell-S">S</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-C">C</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#girasol">Girasol</a></th>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#alcaucil">Alcaucil</a></th>
+          <td class="cell-C">C</td><td class="cell-E">·</td><td class="cell-P">P</td><td class="cell-P">P</td>
+          <td class="cell-P">P</td><td class="cell-E">·</td><td class="cell-S">S</td><td class="cell-S">S</td>
+          <td class="cell-T">T</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#topinambur">Topinambur</a></th>
+          <td class="cell-G">·</td><td class="cell-G">·</td><td class="cell-G">·</td><td class="cell-G">·</td>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-PC">P/C</td>
+          <td class="cell-P">P</td><td class="cell-G">·</td><td class="cell-G">·</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#esparrago">Espárrago</a></th>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-P">P</td><td class="cell-P">P</td><td class="cell-P">P</td>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#tomate">Tomate</a></th>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-T">T</td><td class="cell-C">C</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#morron">Morrón / ají</a></th>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-C">C</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#berenjena">Berenjena</a></th>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-C">C</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#brocoli">Brócoli</a></th>
+          <td class="cell-S">S</td><td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-T">T</td>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-S">S</td>
+          <td class="cell-T">T</td><td class="cell-C">C</td><td class="cell-E">·</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#kale">Kale (col rizada)</a></th>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#acelga">Acelga</a></th>
+          <td class="cell-G">·</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-DT">D/T</td>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#espinaca">Espinaca</a></th>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-D">D</td>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-E">·</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#rabanito">Rabanito</a></th>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-C">C</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#papa">Papa</a></th>
+          <td class="cell-C">C</td><td class="cell-P">P</td><td class="cell-P">P</td><td class="cell-G">·</td>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-E">·</td><td class="cell-P">P</td>
+          <td class="cell-P">P</td><td class="cell-G">·</td><td class="cell-C">C</td><td class="cell-C">C</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#remolacha">Remolacha</a></th>
+          <td class="cell-G">·</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-D">D</td>
+          <td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-C">C</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-C">C</td><td class="cell-C">C</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ph-banner">
+    <h3>Suelo pH ~8 (alcalino) — tres consecuencias prácticas</h3>
+    <ul>
+      <li><strong>La papa</strong> es la más sensible — la sarna prospera en suelo alcalino. Acidificar el cantero localmente con azufre, agujas de pino o borra de café; elegir variedades resistentes a la sarna (Spunta, Kennebec); no encalar ese cantero.</li>
+      <li><strong>Clorosis por hierro / manganeso</strong> puede aparecer en tomate, poroto y espinaca como amarillamiento entre nervaduras. Pulverización foliar de hierro quelado es más rápida que enmendar todo el cantero.</li>
+      <li><strong>El espárrago y las brasicáceas (brócoli) en realidad prefieren el suelo alcalino.</strong> Plantarlos en los rincones más alcalinos (los "peores") — el suelo alcalino también reprime la hernia de la col, la peor enfermedad de las brasicáceas.</li>
+    </ul>
+  </div>
+
+  <section class="featured">
+    <h3>Tres Hermanas — policultivo destacado</h3>
+    <p class="featured-sub">Maíz + porotos trepadores + zapallo. Plantar a <strong>mediados o fines de octubre</strong> en Loma Verde, después del riesgo de helada tardía.</p>
+    <div class="sisters-grid">
+      <div class="sister-card">
+        <h4>1 · Maíz primero</h4>
+        <p>Maíz alto y robusto (no maíz dulce — sus cañas son muy débiles para los porotos). Sembrar en bloques de al menos 4×4 hoyos para que la polinización funcione. Esperar a que el maíz alcance ~15 cm antes de sumar los porotos.</p>
+      </div>
+      <div class="sister-card">
+        <h4>2 · Porotos trepadores</h4>
+        <p>Tienen que ser de <em>guía / trepadores</em> (poroto pallar, chaucha vainita) — nunca de mata baja, que no trepan el maíz. Sembrar al pie de cada caña.</p>
+      </div>
+      <div class="sister-card">
+        <h4>3 · Zapallo alrededor</h4>
+        <p>Cualquier Cucurbita sirve; anco / butternut y cabutiá son confiables. Las hojas tapan las malezas; los tallos espinosos disuaden mapaches. Capuchina en el perímetro disuade chinches del zapallo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Notas cultivo por cultivo</h2>
+    <p class="section-lead">Consideraciones de alto nivel a tener siempre presentes: compañeras, el principal error a evitar, y los tiempos específicos de Loma Verde.</p>
+
+    <div class="crop-grid">
+
+      <div class="crop-card" id="maiz">
+        <h3>Maíz <span class="tag">tres hermanas</span></h3>
+        <p class="crop-window">Invernadero ago-sep · Siembra directa oct-nov · Cosecha feb-abr</p>
+        <dl>
+          <dt>Por qué funciona acá</dt>
+          <dd>Ama el calor del verano. Polinización por viento, así que plantar en <strong>bloques, no en hileras</strong> — una sola hilera da choclos vacíos.</dd>
+          <dt>Compañeras</dt>
+          <dd>Porotos (nitrógeno), zapallo (sombra al suelo), capuchina. Evitar tomate (comparten el gusano de la espiga).</dd>
+          <dt>Error a evitar</dt>
+          <dd>Mancha chica → mala polinización → choclos vacíos. Mínimo 4×4 hoyos.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="porotos">
+        <h3>Porotos (guía) <span class="tag">tres hermanas</span></h3>
+        <p class="crop-window">Siembra directa oct-nov · Cosecha feb-abr</p>
+        <dl>
+          <dt>La variedad importa</dt>
+          <dd>Tienen que ser de <strong>guía / trepadores</strong> (poroto pallar, chaucha vainita) — los de mata baja no trepan el maíz y arruinan el sistema.</dd>
+          <dt>Compañeras</dt>
+          <dd>Maíz, zapallo, berenjena, remolacha. Evitar cebolla / ajo.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Sembrar los porotos el mismo día que el maíz → los porotos lo superan y ahogan las cañas. Esperar a que el maíz alcance ~15 cm.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="zapallo">
+        <h3>Zapallo / calabaza <span class="tag">tres hermanas</span></h3>
+        <p class="crop-window">Invernadero ago-sep · Trasplante oct-nov · Cosecha feb-may</p>
+        <dl>
+          <dt>Variedad</dt>
+          <dd>Anco / butternut y cabutiá son variedades argentinas confiables.</dd>
+          <dt>Cuidado</dt>
+          <dd>Muy demandantes. Regar profundo 1-2 veces por semana, mulch abundante. Los tallos espinosos disuaden mamíferos.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Trasplantar muy temprano en suelo frío — se quedan amurriados. Esperar a los días cálidos de octubre.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="luffa">
+        <h3>Luffa (esponja vegetal) <span class="tag">cucurbitácea</span></h3>
+        <p class="crop-window">Invernadero ago-sep · Trasplante oct-nov (con soporte ya instalado) · Cosecha ene-abr</p>
+        <dl>
+          <dt>Necesita soporte firme</dt>
+          <dd>Trepadora vigorosa — mismas necesidades de tutorado y tiempos que el lote de zapallo para el túnel. Cultivar donde exista un arco de malla u otro soporte vertical firme.</dd>
+          <dt>Cosecha</dt>
+          <dd>Joven (15-20 cm) para comer como zapallito, o madura y seca en la planta para usar como esponja vegetal.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Trasplantar antes de que el soporte esté realmente instalado.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="zapallito">
+        <h3>Zapallito <span class="tag">cucurbitácea</span></h3>
+        <p class="crop-window">Invernadero opcional sep · Siembra directa oct-nov · Cosecha dic-mar</p>
+        <dl>
+          <dt>Hábito</dt>
+          <dd>De mata, no trepadora — no necesita tutor ni túnel. Maduración rápida (45-55 días) favorece la siembra directa.</dd>
+          <dt>Espaciado</dt>
+          <dd>Una planta por cantero/bolsón chico para que circule el aire — follaje denso es riesgo de oídio.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Dejar que el fruto crezca de más. Cosechar a los 15-20 cm — más grande queda acuoso y con semillas duras.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="girasol">
+        <h3>Girasol <span class="tag">asterácea</span></h3>
+        <p class="crop-window">Siembra directa oct-nov · Cosecha ene-mar</p>
+        <dl>
+          <dt>Solo siembra directa</dt>
+          <dd>No tolera el trasplante (raíz pivotante larga) — arrancar en invernadero no vale la pena.</dd>
+          <dt>Uso</dt>
+          <dd>Borde / compañera cerca del maíz o cualquier cantero que necesite altura o cortaviento. Misma familia que el alcaucil y el topinambur.</dd>
+          <dt>Ubicación</dt>
+          <dd>Las variedades altas dan sombra — ubicarlas para que no caiga sobre cultivos más bajos que necesitan sol.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="alcaucil">
+        <h3>Alcaucil <span class="tag">perenne</span></h3>
+        <p class="crop-window">Propagación mar-may · Cosecha sep-ene</p>
+        <dl>
+          <dt>Propagación</dt>
+          <dd>Desde hijuelos en lugar de semilla — más rápido y fiel al tipo. Tomar las divisiones en otoño.</dd>
+          <dt>Mantenimiento anual</dt>
+          <dd>Cortar fuerte a fines del verano (feb) — las hojas se ponen feas con el calor; la planta rebrota para la temporada fría.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Dejar las varas florales gastadas en la planta — chupan energía de la corona. Cortarlas en la base después de la cosecha.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="topinambur">
+        <h3>Topinambur <span class="tag">perenne</span></h3>
+        <p class="crop-window">Plantar tubérculos ago-sep · Cosecha may-ago (después de la primera helada, cavar durante el invierno)</p>
+        <dl>
+          <dt>Plantación</dt>
+          <dd>10-15 cm de profundidad, igual que la papa. Espaciar los tubérculos 30-45 cm entre sí.</dd>
+          <dt>pH</dt>
+          <dd>Tolera el pH 8 alcalino sin enmienda — a diferencia de la papa justo abajo.</dd>
+          <dt>Mulch</dt>
+          <dd>Cubrir con mulch después de plantar para retener humedad y suprimir malezas. No hace falta para protección invernal.</dd>
+          <dt>Darle un lugar permanente</dt>
+          <dd>Como al alcaucil y al espárrago — cualquier fragmento de tubérculo que quede rebrota. Un cantero contenido o un bolsón funciona bien.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="esparrago">
+        <h3>Espárrago <span class="tag">perenne</span></h3>
+        <p class="crop-window">Plantar coronas jun-ago · Cosecha sep-nov (desde año 2-3)</p>
+        <dl>
+          <dt>Establecimiento</dt>
+          <dd>Plantar coronas de 1 año en invierno, en una zanja de 25-30 cm, rellenando a medida que aparecen los brotes. <strong>El pH 8 es ideal acá.</strong></dd>
+          <dt>Paciencia</dt>
+          <dd>No cosechar en el año 1. Cosecha liviana año 2 (solo 4 semanas). Cosecha completa desde año 3 (8-10 semanas por primavera).</dd>
+          <dt>Error a evitar</dt>
+          <dd>Presión de malezas en años 1-2 — una vez establecido, el espárrago odia que le disturben las raíces. Carpir obsesivamente al principio.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="tomate">
+        <h3>Tomate <span class="tag">solanácea</span></h3>
+        <p class="crop-window">Invernadero jul-sep · Trasplante oct-nov · Cosecha dic-abr</p>
+        <dl>
+          <dt>Tiempos en Loma Verde</dt>
+          <dd>Sembrar a mediados de julio; trasplantar la primera tanda a principios o mediados de octubre. <strong>Arrancar una segunda tanda en septiembre</strong> como seguro contra heladas tardías.</dd>
+          <dt>Cuidado</dt>
+          <dd>Tutorar desde el día uno — agregarlo después rompe raíces. Podar indeterminados a 1-2 tallos para circulación de aire. Regar siempre al pie, nunca las hojas.</dd>
+          <dt>Compañeras</dt>
+          <dd>Albahaca, zanahoria. Evitar brasicáceas, hinojo, papa.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Riego por aspersión + plantación densa = tizón tardío arrasa todo en enero. Mínimo 60 cm de separación.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="morron">
+        <h3>Morrón / ají <span class="tag">solanácea</span></h3>
+        <p class="crop-window">Invernadero ago-oct · Trasplante noviembre · Cosecha ene-abr</p>
+        <dl>
+          <dt>Tiempos en Loma Verde</dt>
+          <dd><strong>Esperar a noviembre</strong> — los morrones en suelo frío de octubre se amurrian un mes. La temperatura del suelo importa más que la fecha del calendario.</dd>
+          <dt>Compañeras</dt>
+          <dd>Tomate (necesidades similares), albahaca, zanahoria. Evitar porotos (alelopáticos a corta distancia).</dd>
+          <dt>Error a evitar</dt>
+          <dd>Trasplantar muy temprano. Un morrón en suelo frío produce más tarde que uno plantado tres semanas después en suelo caliente.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="berenjena">
+        <h3>Berenjena <span class="tag">solanácea</span></h3>
+        <p class="crop-window">Invernadero ago-oct · Trasplante noviembre · Cosecha ene-abr</p>
+        <dl>
+          <dt>Tiempos en Loma Verde</dt>
+          <dd>La más amante del calor de las tres solanáceas. Esperar a que las noches estén consistentemente por encima de los 15 °C — principios o mediados de noviembre.</dd>
+          <dt>Cuidado</dt>
+          <dd>Tutorar — las plantas maduras pesan y se quiebran. Cosechar cuando están brillantes; piel mate = pasado de punto.</dd>
+          <dt>Compañeras</dt>
+          <dd>Porotos (nitrógeno), espinaca, copete (disuade pulguillas).</dd>
+          <dt>Error a evitar</dt>
+          <dd>Dejar que un fruto madure demasiado le señaliza "ya está, terminamos" — la planta corta el cuaje siguiente. Cosechar agresivamente.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="brocoli">
+        <h3>Brócoli <span class="tag">brasicácea</span></h3>
+        <p class="crop-window">Dos ventanas: ene-jul (otoño) y jun-oct (primavera)</p>
+        <dl>
+          <dt>Ventaja en Loma Verde</dt>
+          <dd>El pH 8 reprime la hernia de la col — al brócoli le va muy bien acá. Plantar en el cantero más alcalino.</dd>
+          <dt>Brotes laterales</dt>
+          <dd>Después de cortar la cabeza principal, <strong>dejar la planta</strong> — produce brotes laterales por otras 4-6 semanas.</dd>
+          <dt>Compañeras</dt>
+          <dd>Cebolla, remolacha, acelga, lechuga, eneldo. Evitar tomate y frutilla.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Sembrar tarde en primavera — cuando la temperatura diurna llega a 27 °C las cabezas "abotonan" o florecen como cogollitos minúsculos.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="kale">
+        <h3>Kale (col rizada) <span class="tag">brasicácea</span></h3>
+        <p class="crop-window">Siembra directa mar-sep · Cosecha continua durante los meses fríos</p>
+        <dl>
+          <dt>Resistente a la helada</dt>
+          <dd>Todavía más que el brócoli — el frío endulza las hojas. No necesita etapa de invernadero.</dd>
+          <dt>Profundidad de siembra</dt>
+          <dd>1-1.5 cm, misma regla de siembra superficial que el brócoli. Mantener húmedo hasta la germinación (5-10 días).</dd>
+          <dt>Compañeras</dt>
+          <dd>Igual que el brócoli — bien con cebolla, remolacha, acelga, eneldo; evitar tomate y frutilla.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="acelga">
+        <h3>Acelga <span class="tag">quenopodiácea</span></h3>
+        <p class="crop-window">Sembrar feb-abr y ago-oct · Cosecha continua</p>
+        <dl>
+          <dt>El cultivo más fácil</dt>
+          <dd>Crece casi todo el año acá. Siembra directa; remojar las semillas 4 h. Cada "semilla" es un racimo — esperar tener que ralear.</dd>
+          <dt>Forma de cosecha</dt>
+          <dd>Solo hojas externas — cogollo central intacto. Una sola planta produce por más de 6 meses.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Cosechar las hojas nuevas del centro. Siempre cosechar de afuera hacia adentro.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="espinaca">
+        <h3>Espinaca <span class="tag">quenopodiácea</span></h3>
+        <p class="crop-window">Sembrar mar-may y agosto · Cosecha jun-oct</p>
+        <dl>
+          <dt>Ventana acotada</dt>
+          <dd>Se espiga rápido con calor — principalmente cultivo de otoño / invierno / principios de primavera. Remojar las semillas la noche anterior.</dd>
+          <dt>Atención al pH 8</dt>
+          <dd>Baja la disponibilidad de hierro y manganeso — ojo con el amarillamiento entre nervaduras. Un puñado de compost al sembrar amortigua esto.</dd>
+          <dt>Compañeras</dt>
+          <dd>Frutilla, brasicáceas, rabanito. Evitar papa.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Sembrar muy tarde en primavera — cuando las noches se mantienen por encima de los 18 °C, la espinaca se espiga en una semana.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="rabanito">
+        <h3>Rabanito <span class="tag">brasicácea</span></h3>
+        <p class="crop-window">Sembrar sucesivamente mar-nov · Cosecha 25-35 días después</p>
+        <dl>
+          <dt>Gratificación instantánea</dt>
+          <dd>Siembra directa cada 2 semanas en meses fríos; pausa dic-feb. Usar como marcador / intercultivo en hileras de germinación lenta.</dd>
+          <dt>Función extra</dt>
+          <dd>Útil como cultivo de sacrificio cerca de cucurbitáceas — atrae a las pulguillas.</dd>
+          <dt>Error a evitar</dt>
+          <dd>Dejarlos pasados de tiempo — se ponen leñosos y se parten a la semana de estar listos. Cosechar a tiempo.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="papa">
+        <h3>Papa <span class="tag">solanácea</span></h3>
+        <p class="crop-window">Plantar ago-sep (principal) y feb-mar (otoño) · Cosecha nov-dic y may-jun</p>
+        <dl>
+          <dt>Tiempos en Loma Verde</dt>
+          <dd>No plantar en julio a pesar del consejo clásico de Buenos Aires — el follaje emergente se quema con la helada de fines de agosto. <strong>Plantar desde fines de agosto en adelante.</strong></dd>
+          <dt>Semilla y preparación</dt>
+          <dd>Usar papa semilla certificada, no del supermercado. "Sembrar al verde" (brotar) 2-3 semanas antes de plantar. Aporcar tierra a medida que crecen los tallos.</dd>
+          <dt>El tema del pH 8</dt>
+          <dd>La sarna es más probable. Acidificar la zanja con agujas de pino o azufre. Elegir variedades resistentes (Spunta, Kennebec).</dd>
+          <dt>Error a evitar</dt>
+          <dd>Plantar donde el año pasado hubo tomate o berenjena — verticilosis y tizón quedan en el suelo.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="remolacha">
+        <h3>Remolacha <span class="tag">quenopodiácea</span></h3>
+        <p class="crop-window">Sembrar feb-abr y ago-oct · Cosecha 60-90 días</p>
+        <dl>
+          <dt>Dos cultivos al año</dt>
+          <dd>Estación fría a templada; doble cultivo como la acelga. Remojar semillas la noche anterior; esperar ralear (racimos).</dd>
+          <dt>Tamaño de cosecha</dt>
+          <dd>De pelota de golf a pelota de tenis — más grande se vuelve leñosa. Las hojas son excelentes (misma familia que la acelga).</dd>
+          <dt>Compañeras</dt>
+          <dd>Cebolla, lechuga, brasicáceas. Evitar porotos de guía.</dd>
+          <dt>Error a evitar</dt>
+          <dd>No ralear. Las remolachas necesitan 8-10 cm entre plantas o se obtiene todo hoja, nada de raíz.</dd>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Acciones sugeridas mes a mes</h2>
+    <p class="section-lead">Pantallazo rápido de "¿qué está pendiente?" para la consulta semanal.</p>
+
+    <div class="monthly">
+
+      <div class="month-card verano">
+        <h4>Enero</h4>
+        <p>Cosechar los frutos de verano. Sembrar plantines de brócoli para la cosecha de otoño. Sembrar acelga / remolacha / rabanito para otoño.</p>
+      </div>
+      <div class="month-card verano">
+        <h4>Febrero</h4>
+        <p>Cortar los alcauciles a fondo. Plantar la papa de otoño. Trasplantar el brócoli de otoño. Sembrar espinaca.</p>
+      </div>
+      <div class="month-card otono">
+        <h4>Marzo-abril</h4>
+        <p>Divisiones de alcaucil. Sembrar acelga / espinaca / rabanito / remolacha. Cosechar la cola del verano. Manta térmica a mano desde mediados de abril.</p>
+      </div>
+      <div class="month-card otono">
+        <h4>Mayo</h4>
+        <p>Limpiar canteros de verano. Plantar ajo y cebolla. Últimas siembras de rabanito / espinaca. Primera helada probable — cubrir lo sensible.</p>
+      </div>
+      <div class="month-card invierno">
+        <h4>Junio-julio</h4>
+        <p>Plantar coronas de espárrago. Sembrar semillas de tomate en invernadero (mediados de julio). <strong>No plantar todavía la papa principal</strong> — muy temprano para Loma Verde.</p>
+      </div>
+      <div class="month-card invierno">
+        <h4>Agosto</h4>
+        <p>Sembrar semillas de morrón / berenjena / zapallo / brócoli en invernadero. Plantar la papa principal desde fines de agosto. Preparar canteros de verano con compost.</p>
+      </div>
+      <div class="month-card primavera">
+        <h4>Septiembre</h4>
+        <p>Trasplantar brócoli. Continuar con la plantación de papa. Arrancar una segunda tanda de tomate como seguro contra heladas. Primera cosecha de espárrago / alcaucil. <strong>No trasplantar cultivos sensibles a la helada todavía.</strong></p>
+      </div>
+      <div class="month-card primavera">
+        <h4>Octubre</h4>
+        <p>Trasplantar tomate (primera tanda). Siembra directa de maíz y porotos guía a mediados/fines del mes. Trasplantar zapallo a fines de octubre. Manta térmica accesible.</p>
+      </div>
+      <div class="month-card primavera">
+        <h4>Noviembre</h4>
+        <p>Trasplantar morrones, berenjenas y la segunda tanda de tomate. Carpir obsesivamente. Mulch abundante antes del calor del verano.</p>
+      </div>
+      <div class="month-card verano">
+        <h4>Diciembre</h4>
+        <p>Mantenerse al día con el riego y la patrulla de plagas. La huerta está en producción, no en plantación.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    Generado para la quinta en Loma Verde, Escobar · lat -34.35 · pH ~8 ·
+    Documento de referencia: <code>calendario_huerta.md</code>
+  </footer>
+
+</div>
+</body>
+</html>

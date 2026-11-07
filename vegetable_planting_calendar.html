@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vegetable Planting Calendar — Loma Verde, Escobar</title>
+<style>
+  :root {
+    --bg:        #f8f6f1;
+    --card:      #ffffff;
+    --ink:       #1c1917;
+    --muted:     #57534e;
+    --rule:      #e7e5e4;
+    --primary:   #2d5016;
+    --primary-2: #436b1c;
+    --accent:    #c2410c;
+
+    --c-S: #f59e0b;  /* greenhouse start — amber */
+    --c-T: #65a30d;  /* transplant — lime */
+    --c-D: #15803d;  /* direct sow — green */
+    --c-P: #92400e;  /* plant tubers/crowns — brown */
+    --c-H: #c2410c;  /* harvest — terracotta */
+    --c-G: #d6d3d1;  /* growing */
+    --c-E: #fafaf9;  /* empty */
+
+    --s-summer: #fde68a;
+    --s-autumn: #fed7aa;
+    --s-winter: #cbd5e1;
+    --s-spring: #bbf7d0;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.55;
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  /* ---------- Header ---------- */
+  header.hero {
+    margin-bottom: 32px;
+  }
+  header.hero .kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  header.hero h1 {
+    font-size: 36px;
+    line-height: 1.15;
+    margin: 0 0 8px;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+  }
+  header.hero .subtitle {
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 720px;
+  }
+
+  /* ---------- Climate banner ---------- */
+  .climate-banner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 28px 0 32px;
+  }
+  .climate-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .climate-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .climate-card .value {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 15px;
+  }
+  .climate-card.warn { border-left: 3px solid var(--accent); }
+  .climate-card.safe { border-left: 3px solid var(--primary-2); }
+
+  /* ---------- Sections ---------- */
+  section { margin: 40px 0; }
+  section h2 {
+    font-size: 22px;
+    color: var(--primary);
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  section .section-lead {
+    color: var(--muted);
+    margin: 0 0 18px;
+    font-size: 14px;
+  }
+
+  /* ---------- Legend ---------- */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px 0 18px;
+  }
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    padding: 6px 12px 6px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .legend-swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    color: white;
+  }
+
+  /* ---------- Calendar table ---------- */
+  .calendar-wrap {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--rule);
+    padding: 18px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  table.calendar {
+    border-collapse: separate;
+    border-spacing: 4px;
+    width: 100%;
+    min-width: 760px;
+  }
+  table.calendar th, table.calendar td {
+    padding: 0;
+    text-align: center;
+    font-size: 13px;
+  }
+  table.calendar thead .season th {
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 0;
+    border-radius: 6px;
+    color: #1c1917;
+    background: var(--c-E);
+  }
+  table.calendar thead .season .summer { background: var(--s-summer); }
+  table.calendar thead .season .autumn { background: var(--s-autumn); }
+  table.calendar thead .season .winter { background: var(--s-winter); }
+  table.calendar thead .season .spring { background: var(--s-spring); }
+
+  table.calendar thead .months th {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--muted);
+    padding: 8px 0 12px;
+  }
+  table.calendar tbody th.crop {
+    text-align: left;
+    padding: 0 14px 0 6px;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 14px;
+    min-width: 170px;
+    white-space: nowrap;
+  }
+  table.calendar tbody th.crop a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rule);
+  }
+  table.calendar tbody th.crop a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  table.calendar tbody td {
+    height: 36px;
+    width: 56px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  td.cell-S { background: var(--c-S); color: #1c1917; }
+  td.cell-T { background: var(--c-T); color: white; }
+  td.cell-D { background: var(--c-D); color: white; }
+  td.cell-P { background: var(--c-P); color: white; }
+  td.cell-H { background: var(--c-H); color: white; }
+  td.cell-G { background: var(--c-G); color: var(--muted); }
+  td.cell-E { background: var(--c-E); color: transparent; }
+  td.cell-DT {
+    background: linear-gradient(135deg, var(--c-D) 50%, var(--c-T) 50%);
+    color: white;
+    font-size: 11px;
+  }
+  td.cell-PH {
+    background: linear-gradient(135deg, var(--c-P) 50%, var(--c-H) 50%);
+    color: white;
+    font-size: 11px;
+  }
+
+  /* ---------- pH banner ---------- */
+  .ph-banner {
+    background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin: 32px 0;
+    border: 1px solid #fcd34d;
+  }
+  .ph-banner h3 {
+    margin: 0 0 10px;
+    color: #78350f;
+    font-size: 18px;
+  }
+  .ph-banner p { margin: 6px 0; color: #57534e; }
+  .ph-banner ul { margin: 8px 0 0 18px; padding: 0; color: #57534e; }
+  .ph-banner li { margin: 4px 0; }
+  .ph-banner strong { color: #78350f; }
+
+  /* ---------- Three Sisters featured ---------- */
+  .featured {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-2) 100%);
+    color: #f5f5f4;
+    border-radius: 14px;
+    padding: 28px;
+    margin: 32px 0;
+  }
+  .featured h3 {
+    margin: 0 0 4px;
+    color: #fef3c7;
+    font-size: 22px;
+  }
+  .featured .featured-sub {
+    color: #d6d3d1;
+    margin: 0 0 16px;
+    font-size: 14px;
+  }
+  .featured .sisters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .sister-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    backdrop-filter: blur(4px);
+  }
+  .sister-card h4 {
+    margin: 0 0 6px;
+    color: #fef3c7;
+    font-size: 15px;
+  }
+  .sister-card p {
+    margin: 0;
+    font-size: 13px;
+    color: #e7e5e4;
+    line-height: 1.5;
+  }
+
+  /* ---------- Crop cards ---------- */
+  .crop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 18px;
+  }
+  .crop-card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--rule);
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    scroll-margin-top: 16px;
+  }
+  .crop-card h3 {
+    margin: 0 0 4px;
+    color: var(--primary);
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .crop-card .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+  }
+  .crop-card .crop-window {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+  .crop-card dl { margin: 0; }
+  .crop-card dt {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-top: 12px;
+  }
+  .crop-card dd {
+    margin: 4px 0 0;
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .crop-card dt:first-child { margin-top: 0; }
+
+  /* ---------- Monthly timeline ---------- */
+  .monthly {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .month-card {
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid var(--rule);
+    padding: 14px 16px;
+    border-top: 4px solid var(--primary-2);
+  }
+  .month-card.summer { border-top-color: #d97706; }
+  .month-card.autumn { border-top-color: #c2410c; }
+  .month-card.winter { border-top-color: #475569; }
+  .month-card.spring { border-top-color: #15803d; }
+  .month-card h4 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    color: var(--primary);
+  }
+  .month-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* ---------- Print ---------- */
+  @media print {
+    body { background: white; font-size: 11pt; }
+    .container { max-width: none; padding: 0; }
+    .featured { background: #2d5016 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .calendar-wrap, .crop-card, .month-card, .climate-card, .ph-banner {
+      box-shadow: none;
+      page-break-inside: avoid;
+    }
+    table.calendar td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="hero">
+    <div class="kicker">Homestead planning · Loma Verde, Escobar</div>
+    <h1>Vegetable Planting Calendar</h1>
+    <p class="subtitle">
+      Year-round planting reference for open pampas countryside at
+      latitude ~-34.35. Tuned for a longer frost window than the city
+      of Buenos Aires and the realities of a frost-pocket-prone flat
+      site.
+    </p>
+  </header>
+
+  <div class="climate-banner">
+    <div class="climate-card warn">
+      <div class="label">First frost</div>
+      <div class="value">Early-to-mid May</div>
+    </div>
+    <div class="climate-card warn">
+      <div class="label">Last frost</div>
+      <div class="value">Mid-to-late September</div>
+    </div>
+    <div class="climate-card safe">
+      <div class="label">Safe transplant date</div>
+      <div class="value">After October 1 (Nov for pepper / eggplant)</div>
+    </div>
+    <div class="climate-card">
+      <div class="label">Soil pH (measured)</div>
+      <div class="value">~8 (alkaline) — see notes</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>How to read the calendar</h2>
+    <p class="section-lead">Each cell tells you what to do with that crop in that month. Hover or click a crop name to jump to its detail card.</p>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-S); color:#1c1917">S</span>Start seedlings (greenhouse)</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-T)">T</span>Transplant outdoors</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-D)">D</span>Direct sow</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-P)">P</span>Plant crowns / tubers</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-H)">H</span>Harvest</span>
+      <span class="legend-item"><span class="legend-swatch" style="background:var(--c-G); color:var(--muted)">·</span>Growing in ground</span>
+    </div>
+  </section>
+
+  <div class="calendar-wrap">
+    <table class="calendar">
+      <thead>
+        <tr class="season">
+          <th></th>
+          <th class="summer" colspan="2">Summer</th>
+          <th class="autumn" colspan="3">Autumn</th>
+          <th class="winter" colspan="3">Winter</th>
+          <th class="spring" colspan="3">Spring</th>
+          <th class="summer">Sum</th>
+        </tr>
+        <tr class="months">
+          <th></th>
+          <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+          <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <th class="crop"><a href="#corn">Corn</a></th>
+          <td class="cell-G">·</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#beans">Beans (pole)</a></th>
+          <td class="cell-G">·</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#pumpkin">Pumpkin / squash</a></th>
+          <td class="cell-G">·</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td>
+          <td class="cell-H">H</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-T">T</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#luffa">Luffa</a></th>
+          <td class="cell-G">·</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td>
+          <td class="cell-H">H</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-T">T</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#zucchini">Zucchini</a></th>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td>
+          <td class="cell-S">S</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-H">H</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#sunflower">Sunflower</a></th>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#artichoke">Artichoke</a></th>
+          <td class="cell-H">H</td><td class="cell-E">·</td><td class="cell-P">P</td><td class="cell-P">P</td>
+          <td class="cell-P">P</td><td class="cell-E">·</td><td class="cell-S">S</td><td class="cell-S">S</td>
+          <td class="cell-T">T</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#sunchoke">Sunchoke</a></th>
+          <td class="cell-G">·</td><td class="cell-G">·</td><td class="cell-G">·</td><td class="cell-G">·</td>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-PH">P/H</td>
+          <td class="cell-P">P</td><td class="cell-G">·</td><td class="cell-G">·</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#asparagus">Asparagus</a></th>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td>
+          <td class="cell-E">·</td><td class="cell-P">P</td><td class="cell-P">P</td><td class="cell-P">P</td>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#tomato">Tomato</a></th>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-T">T</td><td class="cell-H">H</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#pepper">Pepper</a></th>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-H">H</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#eggplant">Eggplant</a></th>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-S">S</td>
+          <td class="cell-S">S</td><td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-H">H</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#broccoli">Broccoli</a></th>
+          <td class="cell-S">S</td><td class="cell-S">S</td><td class="cell-T">T</td><td class="cell-T">T</td>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-S">S</td>
+          <td class="cell-T">T</td><td class="cell-H">H</td><td class="cell-E">·</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#kale">Kale</a></th>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#acelga">Acelga (chard)</a></th>
+          <td class="cell-G">·</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-DT">D/T</td>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-G">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#spinach">Spinach</a></th>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-D">D</td>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-E">·</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#rabanito">Rabanito (radish)</a></th>
+          <td class="cell-E">·</td><td class="cell-E">·</td><td class="cell-D">D</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-H">H</td><td class="cell-E">·</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#potato">Potatoes</a></th>
+          <td class="cell-H">H</td><td class="cell-P">P</td><td class="cell-P">P</td><td class="cell-G">·</td>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-E">·</td><td class="cell-P">P</td>
+          <td class="cell-P">P</td><td class="cell-G">·</td><td class="cell-H">H</td><td class="cell-H">H</td>
+        </tr>
+
+        <tr>
+          <th class="crop"><a href="#beet">Beet</a></th>
+          <td class="cell-G">·</td><td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-D">D</td>
+          <td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-H">H</td><td class="cell-D">D</td>
+          <td class="cell-D">D</td><td class="cell-D">D</td><td class="cell-H">H</td><td class="cell-H">H</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ph-banner">
+    <h3>Soil pH ~8 (alkaline) — three practical consequences</h3>
+    <ul>
+      <li><strong>Potato</strong> is most sensitive — scab thrives in alkaline soil. Acidify the potato bed locally with sulfur, pine needles, or coffee grounds; pick scab-resistant varieties (Spunta, Kennebec); never lime that bed.</li>
+      <li><strong>Iron / manganese chlorosis</strong> can show up on tomato, bean and spinach as yellowing between leaf veins. Foliar chelated iron is faster than amending the whole bed.</li>
+      <li><strong>Asparagus and brassicas (broccoli) actually prefer alkaline.</strong> Plant them in the worst (most alkaline) corners — alkaline soil also suppresses clubroot, the worst brassica disease.</li>
+    </ul>
+  </div>
+
+  <section class="featured">
+    <h3>Three Sisters — featured polyculture</h3>
+    <p class="featured-sub">Corn + climbing beans + pumpkin. Plant in <strong>mid-to-late October</strong> in Loma Verde, after the late-frost risk has passed.</p>
+    <div class="sisters-grid">
+      <div class="sister-card">
+        <h4>1 · Corn first</h4>
+        <p>Tall, sturdy maize (not sweet corn — stalks too weak for beans). Plant in blocks of at least 4×4 hills for pollination. Wait until corn reaches ~15 cm before adding beans.</p>
+      </div>
+      <div class="sister-card">
+        <h4>2 · Climbing beans</h4>
+        <p>Must be <em>pole / climbing</em> (poroto pallar, chaucha vainita) — never bush beans, which won't climb the corn. Sow at the base of each stalk.</p>
+      </div>
+      <div class="sister-card">
+        <h4>3 · Pumpkin around the edges</h4>
+        <p>Any Cucurbita works; anco / butternut and cabutiá are reliable. Leaves shade out weeds; prickly stems deter raccoons. Nasturtium on the perimeter deters squash bugs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Crop-by-crop notes</h2>
+    <p class="section-lead">High-level considerations to keep in mind: companions, the single biggest mistake to avoid, and timing quirks specific to Loma Verde.</p>
+
+    <div class="crop-grid">
+
+      <div class="crop-card" id="corn">
+        <h3>Corn <span class="tag">3 sisters</span></h3>
+        <p class="crop-window">Greenhouse Aug-Sep · Direct sow Oct-Nov · Harvest Feb-Apr</p>
+        <dl>
+          <dt>Why it works here</dt>
+          <dd>Loves summer heat. Wind-pollinated, so plant in <strong>blocks, not rows</strong> — a single row produces empty cobs.</dd>
+          <dt>Companions</dt>
+          <dd>Beans (nitrogen), pumpkin (shade), nasturtium. Avoid tomato (shared earworm).</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Tiny patch → poor pollination → empty cobs. Minimum 4×4 hills.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="beans">
+        <h3>Beans (pole) <span class="tag">3 sisters</span></h3>
+        <p class="crop-window">Direct sow Oct-Nov · Harvest Feb-Apr</p>
+        <dl>
+          <dt>Variety matters</dt>
+          <dd>Must be <strong>pole / climbing</strong> (poroto pallar, chaucha vainita) — bush beans don't climb corn, defeating the system.</dd>
+          <dt>Companions</dt>
+          <dd>Corn, pumpkin, eggplant, beet. Avoid onion / garlic.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Sowing beans the same day as corn → beans outpace and smother the stalks. Wait for corn to reach ~15 cm.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="pumpkin">
+        <h3>Pumpkin / squash <span class="tag">3 sisters</span></h3>
+        <p class="crop-window">Greenhouse Aug-Sep · Transplant Oct-Nov · Harvest Feb-May</p>
+        <dl>
+          <dt>Variety</dt>
+          <dd>Anco / butternut and cabutiá are reliable Argentine varieties.</dd>
+          <dt>Care</dt>
+          <dd>Heavy feeders. Water deeply 1-2× weekly, mulch heavily. Pickly stems deter mammals.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Transplanting too early into cold soil — they sit and sulk. Wait for warm October days.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="luffa">
+        <h3>Luffa <span class="tag">cucurbit</span></h3>
+        <p class="crop-window">Greenhouse Aug-Sep · Transplant Oct-Nov (once support exists) · Harvest Jan-Apr</p>
+        <dl>
+          <dt>Needs sturdy support</dt>
+          <dd>Vigorous climber — same trellising needs and timing as the pumpkin tunnel batch. Grow wherever a mesh arch or other firm vertical support exists.</dd>
+          <dt>Harvest</dt>
+          <dd>Young (15-20 cm) for eating like a summer squash, or mature/dry on the vine for a scouring sponge.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Transplanting before the support structure is actually in place.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="zucchini">
+        <h3>Zucchini (zapallito) <span class="tag">cucurbit</span></h3>
+        <p class="crop-window">Optional greenhouse Sep · Direct sow Oct-Nov · Harvest Dec-Mar</p>
+        <dl>
+          <dt>Habit</dt>
+          <dd>Bush, not vining — no trellis or tunnel needed. Fast maturity (45-55 days) favors direct sowing.</dd>
+          <dt>Spacing</dt>
+          <dd>One plant per small bed/bag for airflow — dense canopy is a powdery mildew risk.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Letting fruit oversize. Pick at 15-20 cm — bigger turns watery and seedy.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="sunflower">
+        <h3>Sunflower <span class="tag">asteraceae</span></h3>
+        <p class="crop-window">Direct sow Oct-Nov · Harvest Jan-Mar</p>
+        <dl>
+          <dt>Direct sow only</dt>
+          <dd>Resents transplanting (long taproot) — greenhouse start not worthwhile.</dd>
+          <dt>Use</dt>
+          <dd>Border/companion near corn or any bed wanting height or a windbreak. Same family as artichoke and sunchoke.</dd>
+          <dt>Siting</dt>
+          <dd>Tall varieties can shade a bed — plant where the shadow won't fall on shorter, sun-hungry crops.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="artichoke">
+        <h3>Artichoke <span class="tag">perennial</span></h3>
+        <p class="crop-window">Propagate Mar-May · Harvest Sep-Jan</p>
+        <dl>
+          <dt>Propagation</dt>
+          <dd>From offshoots ("hijuelos") rather than seed — faster and truer to type. Take divisions in autumn.</dd>
+          <dt>Annual maintenance</dt>
+          <dd>Cut back hard in late summer (Feb) — leaves go ratty in heat; plant resprouts for cool season.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Leaving spent flower stalks on the plant — they sap energy from the crown. Cut at base after harvest.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="sunchoke">
+        <h3>Sunchoke (topinambur) <span class="tag">perennial</span></h3>
+        <p class="crop-window">Plant tubers Aug-Sep · Harvest May-Aug (after first frost, dig through winter)</p>
+        <dl>
+          <dt>Planting</dt>
+          <dd>10-15 cm deep, same as potato. Space tubers 30-45 cm apart.</dd>
+          <dt>pH</dt>
+          <dd>Shrugs off alkaline pH 8 without amendment — unlike potato just below it.</dd>
+          <dt>Mulch</dt>
+          <dd>Mulch after planting to retain moisture and suppress weeds. Not needed for winter frost protection.</dd>
+          <dt>Give it a permanent home</dt>
+          <dd>Like artichoke and asparagus — any tuber fragment left behind resprouts. A contained bed or bolsón-style bag works well.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="asparagus">
+        <h3>Asparagus <span class="tag">perennial</span></h3>
+        <p class="crop-window">Plant crowns Jun-Aug · Harvest Sep-Nov (from year 2-3)</p>
+        <dl>
+          <dt>Setup</dt>
+          <dd>Plant 1-year-old crowns in winter, in a trench 25-30 cm deep, backfilling as shoots emerge. <strong>The pH 8 soil is ideal here.</strong></dd>
+          <dt>Patience</dt>
+          <dd>No harvest year 1. Light harvest year 2 (4 weeks only). Full harvest year 3+ (8-10 weeks each spring).</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Weed pressure in years 1-2 — once established, asparagus hates root disturbance. Weed obsessively early.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="tomato">
+        <h3>Tomato <span class="tag">solanaceae</span></h3>
+        <p class="crop-window">Greenhouse Jul-Sep · Transplant Oct-Nov · Harvest Dec-Apr</p>
+        <dl>
+          <dt>Loma Verde timing</dt>
+          <dd>Start mid-July; transplant first cohort early-to-mid October. <strong>Start a second cohort in September</strong> as insurance against late frost.</dd>
+          <dt>Care</dt>
+          <dd>Stake from day one — retrofitting tears roots. Prune indeterminates to 1-2 stems for airflow. Water at base only, never leaves.</dd>
+          <dt>Companions</dt>
+          <dd>Basil, carrot. Avoid brassicas, fennel, potato.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Overhead watering + dense planting = late blight wipeout by January. Space 60 cm minimum.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="pepper">
+        <h3>Pepper (morrón / ají) <span class="tag">solanaceae</span></h3>
+        <p class="crop-window">Greenhouse Aug-Oct · Transplant November · Harvest Jan-Apr</p>
+        <dl>
+          <dt>Loma Verde timing</dt>
+          <dd><strong>Wait until November</strong> — peppers in cold October soil will sulk for a month. Soil temperature matters more than calendar date.</dd>
+          <dt>Companions</dt>
+          <dd>Tomato (similar needs), basil, carrot. Avoid beans (allelopathic at close range).</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Transplanting too early. A pepper in cold soil produces later than one planted three weeks later in warm soil.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="eggplant">
+        <h3>Eggplant <span class="tag">solanaceae</span></h3>
+        <p class="crop-window">Greenhouse Aug-Oct · Transplant November · Harvest Jan-Apr</p>
+        <dl>
+          <dt>Loma Verde timing</dt>
+          <dd>Most heat-loving of the three solanaceae. Wait for nights reliably above 15 °C — early-to-mid November.</dd>
+          <dt>Care</dt>
+          <dd>Stake — mature plants get heavy and crack. Pick while shiny; dull skin means past prime.</dd>
+          <dt>Companions</dt>
+          <dd>Beans (nitrogen), spinach, marigold (deters flea beetles).</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Letting one fruit over-mature signals "we're done" — plant stops further set. Pick aggressively.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="broccoli">
+        <h3>Broccoli <span class="tag">brassica</span></h3>
+        <p class="crop-window">Two windows: Jan-Jul (autumn crop) and Jun-Oct (spring crop)</p>
+        <dl>
+          <dt>Loma Verde advantage</dt>
+          <dd>pH 8 soil suppresses clubroot — broccoli does very well here. Plant in your most alkaline bed.</dd>
+          <dt>Side shoots</dt>
+          <dd>After cutting the main head, <strong>leave the plant in</strong> — it produces side shoots for 4-6 more weeks.</dd>
+          <dt>Companions</dt>
+          <dd>Onion, beet, chard, lettuce, dill. Avoid tomato and strawberry.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Late spring sowing — once daytime temps hit 27 °C, heads "button" or flower as tiny curds.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="kale">
+        <h3>Kale <span class="tag">brassica</span></h3>
+        <p class="crop-window">Direct sow Mar-Sep · Harvest continuous through cool months</p>
+        <dl>
+          <dt>Frost-hardy</dt>
+          <dd>Even more so than broccoli — frost sweetens the leaves. No greenhouse stage needed.</dd>
+          <dt>Planting depth</dt>
+          <dd>1-1.5 cm, same shallow-sow rule as broccoli. Keep moist until germination (5-10 days).</dd>
+          <dt>Companions</dt>
+          <dd>Same as broccoli — onion, beet, chard, dill good; avoid tomato, strawberry.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="acelga">
+        <h3>Acelga (Swiss chard) <span class="tag">chenopod</span></h3>
+        <p class="crop-window">Sow Feb-Apr and Aug-Oct · Harvest continuous</p>
+        <dl>
+          <dt>Easiest crop</dt>
+          <dd>Grows nearly year-round here. Direct sow; soak seeds 4h. Each "seed" is a cluster — expect to thin.</dd>
+          <dt>Harvest method</dt>
+          <dd>Outer leaves only — central crown intact. A single plant produces for 6+ months.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Harvesting central new leaves. Always pick from outside in.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="spinach">
+        <h3>Spinach <span class="tag">chenopod</span></h3>
+        <p class="crop-window">Sow Mar-May and Aug · Harvest Jun-Oct</p>
+        <dl>
+          <dt>Narrow window</dt>
+          <dd>Bolts fast in heat — mostly an autumn / winter / early spring crop. Soak seeds overnight before sowing.</dd>
+          <dt>pH 8 watch</dt>
+          <dd>Iron and manganese availability drops at pH 8 — watch for interveinal yellowing. Handful of compost at sowing buffers this.</dd>
+          <dt>Companions</dt>
+          <dd>Strawberry, brassicas, radish. Avoid potato.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Sowing too late into spring — once nights stay above 18 °C, spinach bolts within a week.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="rabanito">
+        <h3>Rabanito (radish) <span class="tag">brassica</span></h3>
+        <p class="crop-window">Sow successively Mar-Nov · Harvest 25-35 days later</p>
+        <dl>
+          <dt>Instant gratification</dt>
+          <dd>Direct sow every 2 weeks through cool months; pause Dec-Feb. Use as a bed-marker / interplant in slow-germinating rows.</dd>
+          <dt>Bonus function</dt>
+          <dd>Useful sacrificial crop near cucurbits — draws flea beetles away.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Leaving in ground past maturity — woody and split within a week of being ready. Pick on time.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="potato">
+        <h3>Potatoes <span class="tag">solanaceae</span></h3>
+        <p class="crop-window">Plant Aug-Sep (main) and Feb-Mar (autumn) · Harvest Nov-Dec and May-Jun</p>
+        <dl>
+          <dt>Loma Verde timing</dt>
+          <dd>Don't plant in July despite the classic Buenos Aires advice — emerging foliage gets burned by late August frost. <strong>Plant from late August onward.</strong></dd>
+          <dt>Seed and setup</dt>
+          <dd>Use certified seed potato, not supermarket spuds. Chit (pre-sprout) 2-3 weeks before planting. Hill up soil as stems grow.</dd>
+          <dt>The pH 8 issue</dt>
+          <dd>Scab is more likely. Acidify the trench with pine needles or sulfur. Pick scab-resistant varieties (Spunta, Kennebec).</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Planting in a bed that had tomato or eggplant last year — verticillium and blight will carry over.</dd>
+        </dl>
+      </div>
+
+      <div class="crop-card" id="beet">
+        <h3>Beet <span class="tag">chenopod</span></h3>
+        <p class="crop-window">Sow Feb-Apr and Aug-Oct · Harvest 60-90 days</p>
+        <dl>
+          <dt>Two crops a year</dt>
+          <dd>Cool-to-mild season; double-cropped like chard. Soak seeds overnight; expect to thin (clusters).</dd>
+          <dt>Harvest size</dt>
+          <dd>Golf-ball to tennis-ball — bigger gets woody. Greens are excellent eating (same family as chard).</dd>
+          <dt>Companions</dt>
+          <dd>Onion, lettuce, brassicas. Avoid pole beans.</dd>
+          <dt>Mistake to avoid</dt>
+          <dd>Not thinning. Beets need 8-10 cm between plants or you get all tops, no root.</dd>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Suggested monthly actions</h2>
+    <p class="section-lead">A quick "what's overdue?" glance for the weekly check-in.</p>
+
+    <div class="monthly">
+
+      <div class="month-card summer">
+        <h4>January</h4>
+        <p>Harvest summer fruits. Start broccoli seedlings for autumn crop. Sow chard / beet / radish for autumn.</p>
+      </div>
+      <div class="month-card summer">
+        <h4>February</h4>
+        <p>Cut artichokes hard. Plant autumn potatoes. Transplant autumn broccoli. Sow spinach.</p>
+      </div>
+      <div class="month-card autumn">
+        <h4>March-April</h4>
+        <p>Artichoke divisions. Sow chard / spinach / radish / beet. Harvest tail end of summer crops. Keep manta térmica ready from mid-April.</p>
+      </div>
+      <div class="month-card autumn">
+        <h4>May</h4>
+        <p>Clean summer beds. Plant garlic and onion. Final radish / spinach sowings. First frost likely — cover anything tender.</p>
+      </div>
+      <div class="month-card winter">
+        <h4>June-July</h4>
+        <p>Plant asparagus crowns. Start tomato seeds in greenhouse mid-July. <strong>Hold off on main-crop potatoes</strong> — too early for Loma Verde.</p>
+      </div>
+      <div class="month-card winter">
+        <h4>August</h4>
+        <p>Start pepper / eggplant / pumpkin / broccoli seeds in greenhouse. Plant main-crop potatoes from late August. Prepare summer beds with compost.</p>
+      </div>
+      <div class="month-card spring">
+        <h4>September</h4>
+        <p>Transplant broccoli. Continue potato planting. Start a second tomato cohort as frost insurance. First asparagus / artichoke harvest. <strong>Do not transplant frost-tender crops yet.</strong></p>
+      </div>
+      <div class="month-card spring">
+        <h4>October</h4>
+        <p>Transplant tomato (first cohort). Direct sow corn and pole beans mid-to-late month. Transplant pumpkin late October. Keep manta térmica accessible.</p>
+      </div>
+      <div class="month-card spring">
+        <h4>November</h4>
+        <p>Transplant peppers, eggplant, second tomato cohort. Weed obsessively. Mulch heavily before summer heat sets in.</p>
+      </div>
+      <div class="month-card summer">
+        <h4>December</h4>
+        <p>Stay on top of watering and pest patrol. Garden is mostly in production, not planting.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    Generated for the homestead at Loma Verde, Escobar · lat -34.35 · pH ~8 ·
+    Source of record: <code>vegetable_planting_calendar.md</code>
+  </footer>
+
+</div>
+</body>
+</html>
