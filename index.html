@@ -50,11 +50,11 @@
     <h2>This week (Nov 12–18)</h2>
     <ul id="week">
       <li><label><input type="checkbox"><span><span class="tag now">overdue</span>Repeat jabón potásico + neem on lemon (was due Nov 9–11), at dusk, off open flowers; check ants on trunk</span></label></li>
-      <li><label><input type="checkbox"><span><span class="tag now">now</span>Mulberry harvest: pick every few days, freeze black / dark-red / white in separate bags</span></label></li>
+      <li><label><input type="checkbox"><span><span class="tag now">now</span>Mulberry harvest: pick every few days, freeze black / dark-red / white in separate bags. Red/black = many ~3 m trees (easy by hand); white = 2 huge trees (+10 m): use a tarp under the canopy</span></label></li>
       <li><label><input type="checkbox"><span>Re-seed luffa in the tunnel's luffa section</span></label></li>
       <li><label><input type="checkbox"><span>Sow zucchini + 3-sisters pumpkin batch (warm soil, good window)</span></label></li>
-      <li><label><input type="checkbox"><span>Re-sow corn in the empty row; identify corn vs sunflower in surviving row; label rows</span></label></li>
-      <li><label><input type="checkbox"><span>Check big beet(s): harvest before they go woody</span></label></li>
+      <li><label><input type="checkbox"><span>Corn + pumpkin were re-sown Nov 11: label the rows with stakes and don't weed inside them until ~15 cm. Identify corn vs sunflower in the surviving row; decide on beans for the 3-sisters</span></label></li>
+      <li><label><input type="checkbox"><span>Check the big beet(s) in bolsón 1: harvest the largest before they go woody</span></label></li>
       <li><label><input type="checkbox"><span>Plant the 4th avocado (confirm status); check shade cover on the new ones before the heat</span></label></li>
       <li><label><input type="checkbox"><span>Durazno: cut open a few aborted fruitlets (larva = grafolita, rot = monilia, clean = normal drop); clear fallen fruit</span></label></li>
     </ul>
@@ -71,6 +71,8 @@
       <li><label><input type="checkbox"><span><span class="tag soon">Dec–Jan</span>Orange trees: 2nd foliar chelated micronutrient round (fruit sizing, sweetness)</span></label></li>
       <li><label><input type="checkbox"><span>Peas: let seed plants dry fully, harvest pods, store labelled</span></label></li>
       <li><label><input type="checkbox"><span>Chard (bolsón 2): let stalks dry, collect and label seed</span></label></li>
+      <li><label><input type="checkbox"><span>Artichoke: ~7 more small heads on the big plant, harvest as they fill
+      </span></label></li>
       <li><label><input type="checkbox"><span>Amaranth re-sow (optional)</span></label></li>
       <li><label><input type="checkbox"><span>Buy pest traps: grafolita pheromone (durazno) + fruit-fly (durazno, membrillo)</span></label></li>
     </ul>
@@ -90,7 +92,9 @@
       <li class="note"><b>Soil pH ≈ 8+:</b> avoid ash / lime / eggshells; micronutrient lockout likely.</li>
       <li class="note"><b>Young avocados:</b> no liquid feed until each is stable after transplant; confirm drainage (overwatering was the first batch's problem).</li>
       <li class="note"><b>Young apple (Red Delicious):</b> pinch flower clusters, keep a mulched ring (off the trunk) clear of turf.</li>
-      <li class="note"><b>Seed sowing in the old bed failed</b> (compaction). Use transplants there until it's aerated.</li>
+      <li class="note"><b>Seed sowing in the old bed failed</b> (compaction). Use transplants there until it's aerated (tomato transplants worked).</li>
+      <li class="note"><b>Baby corn looks like grass:</b> stake and label sown rows, sow in straight lines, weed only what's off-line.</li>
+      <li class="note"><b>Chard shades broccoli:</b> don't co-plant them in the same bag.</li>
     </ul>
   </section>
 
@@ -126,7 +130,7 @@
   // Persist ticks per device (best effort; page works without storage).
   try {
     const boxes = document.querySelectorAll('input[type=checkbox]');
-    const key = 'rancho-ticks-2026-11-12';
+    const key = 'rancho-ticks-2026-11-12b';
     const saved = JSON.parse(localStorage.getItem(key) || '[]');
     boxes.forEach((b, i) => {
       b.checked = !!saved[i];
