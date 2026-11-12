@@ -7,6 +7,21 @@ Pull from this on any conversation; add to it as things come up.
 
 ---
 
+## Garden to-dos (added 2026-11-11, see [vegetable_patches.md](vegetable_patches.md))
+
+- [ ] Re-seed luffa in the tunnel's luffa section (planned "in the next days")
+- [ ] Check the big beet(s) — decide harvest before they go woody
+- [ ] Identify corn vs sunflower in the surviving row (~8 plants, 40 cm; corn may have been weeded out by mistake as babies); re-sow corn in the empty row (still in window), label rows, and decide on beans for the three-sisters guild
+- [ ] Peas: let seed plants dry fully, harvest pods, store labelled for next season
+- [ ] Old raised bed: plan deep aeration (autumn/winter 2027) before next sowing
+- [ ] ~Nov 18-21: check germination in the new 2×2 m bed, corn/pumpkin lines, amaranth/pumpkin patch, tunnel pumpkin (all sown 2026-11-11); label rows
+- [ ] Chard seed: let bolsón 2 stalks dry fully, collect, store labelled
+- [ ] No-till potato mulch: check for shoots in 2–3 weeks, top up hay
+- [ ] Identify the Turkish beans' habit (bush vs trellis); if trellis, try moving them from the new 2×2 m bed to the mesh tunnel (next ~2 weeks, workload permitting)
+- [ ] Berry fence (pea line): next visit, check the ~4 gifted raspberry transplants (15–20 cm when planted) — how many survive/where, and clear wild zarzamora away from them (see [vegetable_patches.md](vegetable_patches.md))
+- [ ] Amaranth re-sow (optional, "maybe soon")
+- [ ] Zucchini and 3-sisters pumpkin batch still unsown — good window now (warm soil)
+
 ## Current seasonal notes
 
 ### Winter (Jun-Aug) — dormant deciduous fruit tree watering

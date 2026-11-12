@@ -1,6 +1,6 @@
 # Vino de mora (artesanal, lotes chicos)
 
-Proyecto iniciado 2026-11-07. Guía de alto nivel para hacer unos pocos litros (5–20 L) con la fruta de las dos moreras del terreno. Es una **guía de proceso y criterios**, no una receta rígida: las cantidades son puntos de partida para ajustar con densímetro y cata.
+Proyecto iniciado 2026-11-07. Guía de alto nivel para hacer unos pocos litros (5–20 L) con la fruta de las moreras del terreno (ver "Coda: las moreras reales" al final: no son solo dos árboles). Es una **guía de proceso y criterios**, no una receta rígida: las cantidades son puntos de partida para ajustar con densímetro y cata.
 
 > **Ojo con el calendario:** la mora madura en Buenos Aires aprox. **octubre–diciembre**. Estamos en plena ventana de cosecha: lo primero que se puede hacer *hoy* es empezar a juntar y congelar fruta (ver Cosecha).
 
@@ -105,6 +105,18 @@ El vino de mora joven suele ser áspero y "verde"; mejora mucho con meses de gua
 - ¿Cuántos litros querés hacer en la primera tanda? Sugerencia: **un lote testigo de 5 L solo con fruta negra + algo de roja**, y otro de ~5 L con blanca + negra, para comparar.
 - Comprar kit mínimo (densímetro, metabisulfito, pectinasa, levadura, damajuana/airlock).
 - Probar levadura comprada vs. fermentación silvestre en un lote chico (experimento barato).
+
+## Coda: las moreras reales del terreno (2026-11-11)
+
+Aclaración posterior a la guía: "los dos árboles" de arriba son **dos tipos de fruta**, no dos plantas.
+
+- **Morera blanca: 2 árboles enormes (+10 m)** en el centro del terreno.
+- **Morera roja/negra: muchos árboles de ~3 m** repartidos por el terreno, incluso a lo largo del cerco medianero (donde también hay zarzamora silvestre y frambuesas plantadas; ver "berry fence" en `vegetable_patches.md`, Pea line).
+
+Qué cambia en la práctica:
+- **Roja/negra**: al ser árboles bajos (~3 m) se juntan a mano o sacudiendo sobre lona sin problema, y al ser muchos hay volumen de sobra para la base del vino. Ojo: son varios, así que conviene anotar cuáles maduran primero y cuáles dan la fruta más oscura/dulce.
+- **Blanca**: la fruta cae desde +10 m, así que lo práctico es **lona/sábana grande bajo la copa y sacudir las ramas bajas o esperar la caída natural**; juntar de la copa es poco realista. Ojo con la fruta que cae al pasto/suelo (contaminación, moscas): juntar seguido.
+- Como hay mucha más fruta roja/negra de lo que se pensaba, la blanca puede quedar como complemento chico o como lote aparte liviano (ver "Preguntas abiertas").
 
 ## Registro de lotes
 

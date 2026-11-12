@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rancho Dashboard</title>
+<style>
+  :root {
+    --bg:#f6f4ee; --card:#fff; --text:#222; --muted:#6b6b60; --line:#e3dfd2;
+    --accent:#3f7d3a; --warn:#b4540a; --warnbg:#fff1e3; --soon:#1f5f8b; --soonbg:#e8f2fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#16180f; --card:#21241a; --text:#ece9dd; --muted:#a3a08f; --line:#383c2c;
+      --accent:#8fcf86; --warn:#ffb06b; --warnbg:#3a2a18; --soon:#8cc4ec; --soonbg:#1b2a38; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:720px; margin:0 auto; padding:16px; }
+  h1 { font-size:1.4rem; margin:4px 0 2px; }
+  .sub { color:var(--muted); font-size:.85rem; margin-bottom:14px; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:12px 14px; margin-bottom:14px; }
+  h2 { font-size:1.05rem; margin:0 0 8px; }
+  h3 { font-size:.9rem; margin:12px 0 4px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
+  ul { list-style:none; margin:0; padding:0; }
+  li { padding:7px 0; border-top:1px solid var(--line); }
+  li:first-child { border-top:0; }
+  label { display:flex; gap:10px; align-items:flex-start; cursor:pointer; }
+  input[type=checkbox] { width:20px; height:20px; margin-top:2px; flex:none; accent-color:var(--accent); }
+  input:checked + span { text-decoration:line-through; color:var(--muted); }
+  .tag { display:inline-block; font-size:.7rem; font-weight:600; padding:1px 7px; border-radius:99px;
+    margin-right:6px; vertical-align:1px; }
+  .now { background:var(--warnbg); color:var(--warn); }
+  .soon { background:var(--soonbg); color:var(--soon); }
+  .note { font-size:.9rem; }
+  .note b { color:var(--accent); }
+  a { color:var(--soon); }
+  .links { display:flex; flex-wrap:wrap; gap:8px; }
+  .links a { padding:6px 10px; border:1px solid var(--line); border-radius:8px; text-decoration:none; font-size:.85rem; }
+  small { color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>🌱 Rancho Dashboard</h1>
+  <div class="sub">Loma Verde, Escobar · last updated <b>2026-11-12</b> · ticks are saved on this device only</div>
+
+  <section>
+    <h2>This week (Nov 12–18)</h2>
+    <ul id="week">
+      <li><label><input type="checkbox"><span><span class="tag now">overdue</span>Repeat jabón potásico + neem on lemon (was due Nov 9–11), at dusk, off open flowers; check ants on trunk</span></label></li>
+      <li><label><input type="checkbox"><span><span class="tag now">now</span>Mulberry harvest: pick every few days, freeze black / dark-red / white in separate bags</span></label></li>
+      <li><label><input type="checkbox"><span>Re-seed luffa in the tunnel's luffa section</span></label></li>
+      <li><label><input type="checkbox"><span>Sow zucchini + 3-sisters pumpkin batch (warm soil, good window)</span></label></li>
+      <li><label><input type="checkbox"><span>Re-sow corn in the empty row; identify corn vs sunflower in surviving row; label rows</span></label></li>
+      <li><label><input type="checkbox"><span>Check big beet(s): harvest before they go woody</span></label></li>
+      <li><label><input type="checkbox"><span>Plant the 4th avocado (confirm status); check shade cover on the new ones before the heat</span></label></li>
+      <li><label><input type="checkbox"><span>Durazno: cut open a few aborted fruitlets (larva = grafolita, rot = monilia, clean = normal drop); clear fallen fruit</span></label></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Coming up</h2>
+    <ul>
+      <li><label><input type="checkbox"><span><span class="tag soon">Nov 18–21</span>Check germination: new 2×2 m bed, corn/pumpkin lines, amaranth/pumpkin patch, tunnel pumpkin (all sown Nov 11); label rows</span></label></li>
+      <li><label><input type="checkbox"><span><span class="tag soon">~Nov 26</span>No-till potato mulch: check for shoots, top up hay</span></label></li>
+      <li><label><input type="checkbox"><span><span class="tag soon">~2 weeks</span>Identify Turkish beans' habit (bush vs trellis); if trellis, move to mesh tunnel</span></label></li>
+      <li><label><input type="checkbox"><span><span class="tag soon">next visit</span>Berry fence: count surviving raspberry transplants, clear wild zarzamora around them</span></label></li>
+      <li><label><input type="checkbox"><span><span class="tag soon">Nov–Dec</span>Buy mulberry-wine kit: densímetro, metabisulfito, pectinasa, levadura, damajuana + airlock; decide batch size</span></label></li>
+      <li><label><input type="checkbox"><span><span class="tag soon">Dec–Jan</span>Orange trees: 2nd foliar chelated micronutrient round (fruit sizing, sweetness)</span></label></li>
+      <li><label><input type="checkbox"><span>Peas: let seed plants dry fully, harvest pods, store labelled</span></label></li>
+      <li><label><input type="checkbox"><span>Chard (bolsón 2): let stalks dry, collect and label seed</span></label></li>
+      <li><label><input type="checkbox"><span>Amaranth re-sow (optional)</span></label></li>
+      <li><label><input type="checkbox"><span>Buy pest traps: grafolita pheromone (durazno) + fruit-fly (durazno, membrillo)</span></label></li>
+    </ul>
+    <h3>Further out</h3>
+    <ul>
+      <li class="note"><b>~May 2027</b> · build anti-frost tents for the 2nd avocado batch</li>
+      <li class="note"><b>Autumn/winter 2027</b> · deep aeration of the old raised bed before next sowing</li>
+      <li class="note"><b>July 2027</b> · pick a central leader on the young apple; structural pruning while dormant</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Keep in mind</h2>
+    <ul>
+      <li class="note"><b>Lemon aphids:</b> outbreak spread Nov 4, treated with soap + neem. No nitrogen / manure / seaweed on the lemon this spring. Watch other citrus.</li>
+      <li class="note"><b>Citrus leaves:</b> asymmetric blotchy mottling points to HLB, not nutrients. Reassess if seen.</li>
+      <li class="note"><b>Soil pH ≈ 8+:</b> avoid ash / lime / eggshells; micronutrient lockout likely.</li>
+      <li class="note"><b>Young avocados:</b> no liquid feed until each is stable after transplant; confirm drainage (overwatering was the first batch's problem).</li>
+      <li class="note"><b>Young apple (Red Delicious):</b> pinch flower clusters, keep a mulched ring (off the trunk) clear of turf.</li>
+      <li class="note"><b>Seed sowing in the old bed failed</b> (compaction). Use transplants there until it's aerated.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Active projects</h2>
+    <ul>
+      <li class="note"><b>Chicken coop</b> (v6): crank prototype / herrero, shopping-list pass.</li>
+      <li class="note"><b>Greenhouse</b> (6×9 m): OpenSCAD script is next; footprint still to measure.</li>
+      <li class="note"><b>Mesh tunnels:</b> mesh sheet size and arch shape pending.</li>
+      <li class="note"><b>Irrigation control:</b> tap type, zone and power/WiFi at the spot pending.</li>
+      <li class="note"><b>LoRa sensors</b> (frost alarm, well monitor): waiting on baseline answers.</li>
+      <li class="note"><b>Vino de mora:</b> harvest and freeze now, ferment later.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Files</h2>
+    <div class="links">
+      <a href="https://github.com/bonesao/rancho_claude/blob/main/backlog.md">backlog</a>
+      <a href="https://github.com/bonesao/rancho_claude/blob/main/vegetable_patches.md">vegetable patches</a>
+      <a href="https://github.com/bonesao/rancho_claude/blob/main/fruit_trees.md">fruit trees</a>
+      <a href="https://github.com/bonesao/rancho_claude/blob/main/avocado.md">avocado</a>
+      <a href="https://github.com/bonesao/rancho_claude/blob/main/vino_de_mora.md">vino de mora</a>
+      <a href="https://github.com/bonesao/rancho_claude/blob/main/greenhouse.md">greenhouse</a>
+      <a href="https://github.com/bonesao/rancho_claude/blob/main/mesh_tunnels.md">mesh tunnels</a>
+      <a href="https://github.com/bonesao/rancho_claude/blob/main/irrigation_control.md">irrigation</a>
+      <a href="calendario_huerta.html">calendario huerta</a>
+      <a href="vegetable_planting_calendar.html">planting calendar</a>
+    </div>
+  </section>
+</main>
+<script>
+  // Persist ticks per device (best effort; page works without storage).
+  try {
+    const boxes = document.querySelectorAll('input[type=checkbox]');
+    const key = 'rancho-ticks-2026-11-12';
+    const saved = JSON.parse(localStorage.getItem(key) || '[]');
+    boxes.forEach((b, i) => {
+      b.checked = !!saved[i];
+      b.addEventListener('change', () => {
+        localStorage.setItem(key, JSON.stringify([...boxes].map(x => x.checked)));
+      });
+    });
+  } catch (e) {}
+</script>
+</body>
+</html>

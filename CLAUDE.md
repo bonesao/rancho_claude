@@ -57,3 +57,10 @@ A handful of steel-mesh walk-through arches (vertical trellis, priority crops: z
 - Pending: actual mesh sheet dimensions, final arch shape (tall/narrow vs wide/shallow — blocked on building one alone), number/location of tunnels, anchoring method, zapallo variety (fruit-weight/sling question)
 
 
+
+
+# Mobile dashboard (GitHub Pages)
+`index.html` at the repo root is the main dashboard, served via GitHub Pages and read from the user's phone (repo: github.com/bonesao/rancho_claude). It shows this week's tasks, upcoming items, things to keep in mind, active projects and links to the working files.
+- **Always keep it current.** Whenever `backlog.md` changes, or a conversation adds/completes a task, changes season-relevant advice, or moves a workstream, update `index.html` in the same session (bump its "last updated" date; if the tick-state `key` in its script is tied to the date, change it only when the checklist items change).
+- **Git is now Claude's job** (this reverses the earlier "I'll handle the GitHub commits myself" rule): at the end of any session that changed files, commit the changes and push to `main` so the Pages site updates. Stage specific files rather than `git add -A` (untracked media like `november_11.mp4` should not be committed unless asked). Never force-push.
+- Keep the page self-contained (inline CSS/JS, no external assets), mobile-first, and short: it is a glanceable summary, not a copy of the md files.
