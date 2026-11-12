@@ -8,7 +8,7 @@ The overall strategy is to aim within reasonable parameters for self-sufficiency
 We will not have a specific linear backlog for the project as a whole, since this is a sort of life companion dynamic.
 We will have a sort of yearly live calendar where we group high level tasks that are necessary, and we must draw from that list on any conversation to add items there, or to remind the user that he should get some of those done soon.
 The expected usage is that the user will launch this project at least once per week as a refresher of what he could do next, get suggestions based on the season, note down what he has done, and let the system re organize the living backlog
-- Living backlog file: [backlog.md](backlog.md) — current seasonal care notes plus open small-project ideas. Check this on any "what should I focus on" style prompt.
+- Living backlog file: [backlog.md](backlog.md) — garden to-dos, seasonal care notes, **active multi-session workstreams** (LoRa, irrigation, greenhouse, mesh tunnels) and open project ideas. Check this on any "what should I focus on" style prompt, and surface in-flight workstreams proactively when relevant (check pending-questions files when resuming).
 
 
 # Homestead specs
@@ -31,32 +31,6 @@ Files named `*_archive.md` (e.g. `chicken_coop/chicken_coop_archive.md`) hold ou
 
 # Logging
 During every conversation, key memories must be stored in some files for easier retrieval. We don't need to store every decision made, but we must ensure a library of knowledge is persisted for future reference
-
-
-# Active workstreams
-Initiatives in flight across sessions. Surface these proactively when relevant; check pending-questions files when resuming.
-
-## LoRa IoT initiative (started 2026-05-30)
-User owns 2 × Heltec Wireless Stick boards (915 MHz). Two deployment specs drafted (pure sensing), currently blocked on baseline answers. The former third spec (soil-moisture irrigation) moved out — see Irrigation control below.
-- Pending answers: [lora_pending_questions.md](lora_pending_questions.md)
-- Project specs: [frost_alarm.md](frost_alarm.md), [well_monitor.md](well_monitor.md)
-
-## Irrigation control (merged 2026-07-27)
-Merges what were three separate threads — the WiFi tap/valve control prototype, the LoRa soil-moisture-triggered irrigation project, and the weather-data watering advisory backlog idea — into one staged project: actuation (phone→valve) → local automation (soil moisture) → weather-driven decision layer. Reuses one of the already-owned Heltec boards; only needs the LoRa gateway if a zone ends up outside WiFi range.
-- Spec: [irrigation_control.md](irrigation_control.md)
-- Pending: tap type (quarter-turn vs multi-turn), which tap/zone, power/WiFi at that spot (see validation questions in the spec)
-
-## Tropical greenhouse (started 2026-07-26)
-Walk-in greenhouse (~6×8m, ~4m tall) to let mango/pineapple/tropical species survive winter, built around the existing avocado frost-tent site. Two structural options in parallel: wood+film MVP first, metal+polycarbonate as target end-state. Hard requirements: manual venting (overheating risk) and using the on-site power outlet for heating/fans.
-- Spec: [greenhouse.md](greenhouse.md)
-- Pending: actual footprint measurement, bay spacing for the metal-frame option, mockup image prompt (once wall/vent layout is settled)
-
-## Mesh arch tunnels (started 2026-07-26)
-A handful of steel-mesh walk-through arches (vertical trellis, priority crops: zapallo + luffa, tomato deprioritized here since it's grown elsewhere). N-S orientation currently favored — gives both faces a usable half-day of direct sun, vs. E-W's one-excellent/one-poor split, which matters since neither priority crop wants a shade side. Wind loading (pampero/sudestada) and airflow-through-tunnel (mildew risk) are secondary factors.
-- Spec: [mesh_tunnels.md](mesh_tunnels.md)
-- Pending: actual mesh sheet dimensions, final arch shape (tall/narrow vs wide/shallow — blocked on building one alone), number/location of tunnels, anchoring method, zapallo variety (fruit-weight/sling question)
-
-
 
 
 # Mobile dashboard (GitHub Pages)

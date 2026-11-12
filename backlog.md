@@ -82,16 +82,33 @@ Working hypothesis: never-fertilized trees + high soil pH (~pH 8, see
 
 ---
 
-## Open backlog items (small projects to scope)
+## Active workstreams (multi-session initiatives)
 
-### Irrigation control (merged, 2026-07-27)
-The WiFi tap/valve prototype and the LoRa soil-moisture irrigation project
-were merged into one staged project — actuation → automation →
-weather-driven decisions — since they were the same underlying goal at
-different layers. Full detail (including the weather/rain-data-driven
-watering advisory idea, now Layer 3) lives in
-[irrigation_control.md](irrigation_control.md), not here, since it's
-substantial enough to need its own file.
+Initiatives in flight across sessions. Surface these proactively when relevant; check pending-questions files when resuming.
+
+### LoRa IoT initiative (started 2026-05-30)
+User owns 2 × Heltec Wireless Stick boards (915 MHz). Two deployment specs drafted (pure sensing), currently blocked on baseline answers. The former third spec (soil-moisture irrigation) moved out — see Irrigation control below.
+- Pending answers: [lora_pending_questions.md](lora_pending_questions.md)
+- Project specs: [frost_alarm.md](frost_alarm.md), [well_monitor.md](well_monitor.md)
+
+### Irrigation control (merged 2026-07-27)
+Full detail (incl. the weather-data watering advisory idea, now Layer 3) lives in the spec. Merges what were three separate threads — the WiFi tap/valve control prototype, the LoRa soil-moisture-triggered irrigation project, and the weather-data watering advisory backlog idea — into one staged project: actuation (phone→valve) → local automation (soil moisture) → weather-driven decision layer. Reuses one of the already-owned Heltec boards; only needs the LoRa gateway if a zone ends up outside WiFi range.
+- Spec: [irrigation_control.md](irrigation_control.md)
+- Pending: tap type (quarter-turn vs multi-turn), which tap/zone, power/WiFi at that spot (see validation questions in the spec)
+
+### Tropical greenhouse (started 2026-07-26)
+Walk-in greenhouse (~6×8m, ~4m tall) to let mango/pineapple/tropical species survive winter, built around the existing avocado frost-tent site. Two structural options in parallel: wood+film MVP first, metal+polycarbonate as target end-state. Hard requirements: manual venting (overheating risk) and using the on-site power outlet for heating/fans.
+- Spec: [greenhouse.md](greenhouse.md)
+- Pending: actual footprint measurement, bay spacing for the metal-frame option, mockup image prompt (once wall/vent layout is settled)
+
+### Mesh arch tunnels (started 2026-07-26)
+A handful of steel-mesh walk-through arches (vertical trellis, priority crops: zapallo + luffa, tomato deprioritized here since it's grown elsewhere). N-S orientation currently favored — gives both faces a usable half-day of direct sun, vs. E-W's one-excellent/one-poor split, which matters since neither priority crop wants a shade side. Wind loading (pampero/sudestada) and airflow-through-tunnel (mildew risk) are secondary factors.
+- Spec: [mesh_tunnels.md](mesh_tunnels.md)
+- Pending: actual mesh sheet dimensions, final arch shape (tall/narrow vs wide/shallow — blocked on building one alone), number/location of tunnels, anchoring method, zapallo variety (fruit-weight/sling question)
+
+---
+
+## Open backlog items (small projects to scope)
 
 ### Vino de mora (2026-11-07) — season is NOW
 Mulberry (black-ripening + white) in season Oct–Dec. Guide in [vino_de_mora.md](vino_de_mora.md).
