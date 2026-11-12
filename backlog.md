@@ -116,18 +116,6 @@ Mulberry (black-ripening + white) in season Oct–Dec. Guide in [vino_de_mora.md
 - [ ] Buy minimal kit before fermenting: densímetro, metabisulfito, pectinasa, levadura, damajuana + airlock
 - [ ] Decide batch size (5 L control vs. 5 L white+black) once yield is known
 
-### Mobile PWA viewer for working .md files (2026-08-12, plan-ahead only — not active)
-Idea: a simple PWA that imports/renders the various working `.md` files
-(fruit_trees.md, backlog.md, avocado.md, greenhouse.md, etc.) as
-"what you see is what you get" pages, hosted on AWS, so it's checkable from
-the phone while out working the terrain instead of walking back inside to
-look something up.
-- Not to be scoped or built yet — just holding the idea so it isn't lost.
-- Known tradeoff already flagged by the user: any future edit to a working
-  file needs a matching PWA content update + redeploy/push to actually show
-  up on the phone. Plan to pair this with an automated reminder (rather than
-  relying on remembering to sync manually) once the PWA is actually built.
-
 ### Chicken coop — design phase (2026-09-11, updated 2026-09-29)
 Mobile tractor, 5 hens to start, ~2×4 m, eggs only. Design v0 and material
 list in [chicken_coop.md](chicken_coop/chicken_coop.md). Predator pressure is low but not
