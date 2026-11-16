@@ -44,12 +44,12 @@
 <body>
 <main>
   <h1>🌱 Rancho Dashboard</h1>
-  <div class="sub">Loma Verde, Escobar · last updated <b>2026-11-12</b> · ticks are saved on this device only</div>
+  <div class="sub">Loma Verde, Escobar · last updated <b>2026-11-16</b> · ticks are saved on this device only</div>
 
   <section>
     <h2>This week (Nov 12–18)</h2>
     <ul id="week">
-      <li><label><input type="checkbox"><span><span class="tag now">overdue</span>Repeat jabón potásico + neem on lemon (was due Nov 9–11), at dusk, off open flowers; check ants on trunk</span></label></li>
+      <li><label><input type="checkbox"><span><span class="tag soon">Nov 18–20</span>Re-check lemon aphids after the 2nd neem round (Nov 15); 3rd round only if colonies are still alive; check ants on trunk</span></label></li>
       <li><label><input type="checkbox"><span><span class="tag now">now</span>Mulberry harvest: pick every few days, freeze black / dark-red / white in separate bags. Red/black = many ~3 m trees (easy by hand); white = 2 huge trees (+10 m): use a tarp under the canopy</span></label></li>
       <li><label><input type="checkbox"><span>Re-seed luffa in the tunnel's luffa section</span></label></li>
       <li><label><input type="checkbox"><span>Sow zucchini + 3-sisters pumpkin batch (warm soil, good window)</span></label></li>
@@ -87,7 +87,7 @@
   <section>
     <h2>Keep in mind</h2>
     <ul>
-      <li class="note"><b>Lemon aphids:</b> outbreak spread Nov 4, treated with soap + neem. No nitrogen / manure / seaweed on the lemon this spring. Watch other citrus.</li>
+      <li class="note"><b>Lemon aphids:</b> outbreak spread Nov 4, treated with soap + neem (2nd round Nov 15). No nitrogen / manure / seaweed on the lemon this spring. Watch other citrus.</li>
       <li class="note"><b>Citrus leaves:</b> asymmetric blotchy mottling points to HLB, not nutrients. Reassess if seen.</li>
       <li class="note"><b>Soil pH ≈ 8+:</b> avoid ash / lime / eggshells; micronutrient lockout likely.</li>
       <li class="note"><b>Young avocados:</b> no liquid feed until each is stable after transplant; confirm drainage (overwatering was the first batch's problem).</li>
@@ -131,7 +131,7 @@
   // Persist ticks per device (best effort; page works without storage).
   try {
     const boxes = document.querySelectorAll('input[type=checkbox]');
-    const key = 'rancho-ticks-2026-11-12b';
+    const key = 'rancho-ticks-2026-11-16';
     const saved = JSON.parse(localStorage.getItem(key) || '[]');
     boxes.forEach((b, i) => {
       b.checked = !!saved[i];

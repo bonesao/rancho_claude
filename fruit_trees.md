@@ -412,6 +412,7 @@ The 2026-10-08 "localized to one shoot" read no longer holds: pulgón has sprawl
 - **Mandarina (preventive):** a few pulgones seen on a single leaf, so sprayed preventively.
 - **Durazno + ciruelo:** leftover from the canister used to finish it off. No pulgón seen on either, so incidental coverage, not a treatment.
 - **Follow-up:** soap/neem is contact-only, so repeat in 5-7 days (~Nov 9-11) at dusk, targeting colonies. Check the lemon's flowers/bees situation and keep it off open blossoms. Re-check naranja/quinotos too. Ants on the trunk still worth checking (sticky barrier).
+- **2nd round applied 2026-11-15** (~11 days after the first, a few days later than the Nov 9-11 target). Re-check colonies/flowers in 3-5 days; only a 3rd round if live colonies persist, otherwise let predators finish.
 
 ## Durazno — aborted fruitlets on the ground (2026-11-04)
 - **Observed:** many aborted baby fruits on the ground, plus a few shriveled dry fruitlets still on the tree. Otherwise healthy; only the odd leaf with the fungus (Mamboretá K was applied once, a few leaves removed by hand, and it has not spread again).

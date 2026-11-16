@@ -156,7 +156,8 @@ Black aphids on a tender shoot tip with curled leaves, near flower buds. Details
 - [ ] Re-check in ~1 week (also naranja/mandarina/quinotos); if spreading → jabón potásico at dusk, not on open flowers
 - [ ] No nitrogen/manure/seaweed on the lemon this spring
 - 2026-11-04: outbreak spread to many branches → applied jabón potásico + neem on lemon (+ mandarina preventive, durazno/ciruelo leftovers). 
-- [ ] Repeat soap/neem on lemon ~Nov 9-11 at dusk, off open flowers; check ants on trunk
+- [x] 2026-11-15: 2nd round of neem applied on lemon
+- [ ] ~Nov 18-20: re-check lemon colonies (3rd round only if still alive); check ants on trunk
 - [ ] Durazno: cut open a few aborted/shriveled fruitlets (larva = grafolita, rot = monilia, clean = normal drop); clear fallen fruit. Reminder: pest traps still unbought (see above)
 
 ### Mulch ring + flower removal — young apple (2026-10-08)
