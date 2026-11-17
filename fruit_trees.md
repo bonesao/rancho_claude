@@ -419,3 +419,8 @@ The 2026-10-08 "localized to one shoot" read no longer holds: pulgón has sprawl
 - **Working read:** most likely normal "June drop"-type self-thinning (peach sheds excess fruitlets), possibly worsened by the heavy rains of the last couple of days. The shriveled ones still hanging are the part worth watching: can also point to grafolita/fruit-fly damage or monilia (brown rot) mummies.
 - **Check:** cut open a few fallen/shriveled fruitlets. Caterpillar or frass = grafolita; no larva but brown, rotting = monilia; clean abort = physiological. Pick up and destroy the fallen ones (larvae pupate in the soil). Traps (grafolita + fruit fly) still not hung per backlog, so no moth-flight data.
 - **Not alarming unless:** drop continues for weeks, or the remaining fruit shows gum, holes or spots.
+
+## Ciruelo — broken branch from fruit load + air-layer attempt (2026-11-17)
+- **Observed:** heavy crop is arching many branches; one broke but stayed attached. A stake was set beside the trunk.
+- **Done:** wrapped the break zone with a cut plastic bottle filled with soil, covered in black nylon. Note: this is **air layering (acodo aéreo)**, not grafting.
+- **Recommendation:** keep the soil moist (a little water through the top every few days), keep the branch supported so it doesn't tear further, and thin the fruit load (and prop the other arching branches). Check for roots in ~6-8 weeks (white roots visible through the clear film); if rooted, cut just below and pot it. Low odds with plum, so treat as an experiment.

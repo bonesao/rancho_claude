@@ -44,13 +44,14 @@
 <body>
 <main>
   <h1>🌱 Rancho Dashboard</h1>
-  <div class="sub">Loma Verde, Escobar · last updated <b>2026-11-16</b> · ticks are saved on this device only</div>
+  <div class="sub">Loma Verde, Escobar · last updated <b>2026-11-17</b> · ticks are saved on this device only</div>
 
   <section>
     <h2>This week (Nov 12–18)</h2>
     <ul id="week">
       <li><label><input type="checkbox"><span><span class="tag soon">Nov 18–20</span>Re-check lemon aphids after the 2nd neem round (Nov 15); 3rd round only if colonies are still alive; check ants on trunk</span></label></li>
       <li><label><input type="checkbox"><span><span class="tag now">now</span>Mulberry harvest: pick every few days, freeze black / dark-red / white in separate bags. Red/black = many ~3 m trees (easy by hand); white = 2 huge trees (+10 m): use a tarp under the canopy</span></label></li>
+      <li><label><input type="checkbox"><span>Ciruelo: thin fruit + prop arching branches; keep the air-layer wrap on the broken branch moist (check roots ~early Jan)</span></label></li>
       <li><label><input type="checkbox"><span>Re-seed luffa in the tunnel's luffa section</span></label></li>
       <li><label><input type="checkbox"><span>Sow zucchini + 3-sisters pumpkin batch (warm soil, good window)</span></label></li>
       <li><label><input type="checkbox"><span>Corn + pumpkin were re-sown Nov 11: label the rows with stakes and don't weed inside them until ~15 cm. Identify corn vs sunflower in the surviving row; decide on beans for the 3-sisters</span></label></li>
@@ -131,7 +132,7 @@
   // Persist ticks per device (best effort; page works without storage).
   try {
     const boxes = document.querySelectorAll('input[type=checkbox]');
-    const key = 'rancho-ticks-2026-11-16';
+    const key = 'rancho-ticks-2026-11-17';
     const saved = JSON.parse(localStorage.getItem(key) || '[]');
     boxes.forEach((b, i) => {
       b.checked = !!saved[i];

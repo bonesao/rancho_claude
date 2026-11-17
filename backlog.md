@@ -160,6 +160,11 @@ Black aphids on a tender shoot tip with curled leaves, near flower buds. Details
 - [ ] ~Nov 18-20: re-check lemon colonies (3rd round only if still alive); check ants on trunk
 - [ ] Durazno: cut open a few aborted/shriveled fruitlets (larva = grafolita, rot = monilia, clean = normal drop); clear fallen fruit. Reminder: pest traps still unbought (see above)
 
+### Ciruelo — air layer on broken branch (2026-11-17)
+Branch broke under fruit load; air-layer wrap set (bottle + soil + black nylon). Details in [fruit_trees.md](fruit_trees.md).
+- [ ] Keep wrap moist; thin ciruelo fruit and prop arching branches
+- [ ] ~early Jan 2027: check for roots; cut below and pot if rooted
+
 ### Mulch ring + flower removal — young apple (2026-10-08)
 Red Delicious (planted 2026-08): pinch off the pink-bud flower clusters now (keep leaves), and clear turf in a ~1 m ring around the trunk and mulch it (wood chips or straw, kept off the trunk). Cherry: same ring if it lacks one. Reasoning in [fruit_trees.md](fruit_trees.md).
 - Later (July, dormancy): pick a central leader on the apple.
