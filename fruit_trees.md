@@ -424,3 +424,10 @@ The 2026-10-08 "localized to one shoot" read no longer holds: pulgón has sprawl
 - **Observed:** heavy crop is arching many branches; one broke but stayed attached. A stake was set beside the trunk.
 - **Done:** wrapped the break zone with a cut plastic bottle filled with soil, covered in black nylon. Note: this is **air layering (acodo aéreo)**, not grafting.
 - **Recommendation:** keep the soil moist (a little water through the top every few days), keep the branch supported so it doesn't tear further, and thin the fruit load (and prop the other arching branches). Check for roots in ~6-8 weeks (white roots visible through the clear film); if rooted, cut just below and pot it. Low odds with plum, so treat as an experiment.
+
+## Pelón — amber gum on green fruit (2026-11-19)
+- **Observed:** a few pelón fruits (~3 cm, green) with a rough scabbed patch of wounded skin topped with amber gum globules, small dark speck at the edge. Durazno fruit unaffected so far.
+- **Read from photo:** looks more like a surface wound than a neat entry hole with frass. Grafolita still the top suspect (same gum as last season on durazno); alternatives are chinche/thrips feeding, hail/rain damage, or scab.
+- **Check:** cut 2-3 affected fruits through the patch to the pit. Caterpillar/tunnel/brown frass = grafolita; shallow corky patch, clean flesh = surface cause. Also check pelón shoot tips for wilted gummy ends.
+- **Do now:** destroy affected fruit away from trees (not compost). Buy/hang grafolita pheromone trap + fruit fly trap this week (backlog since 2026-08-19).
+- **Pending:** cut-open result.

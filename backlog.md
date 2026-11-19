@@ -159,6 +159,7 @@ Black aphids on a tender shoot tip with curled leaves, near flower buds. Details
 - [x] 2026-11-15: 2nd round of neem applied on lemon
 - [ ] ~Nov 18-20: re-check lemon colonies (3rd round only if still alive); check ants on trunk
 - [ ] Durazno: cut open a few aborted/shriveled fruitlets (larva = grafolita, rot = monilia, clean = normal drop); clear fallen fruit. Reminder: pest traps still unbought (see above)
+- [ ] Pelón (2026-11-19): amber gum on a few green fruits. Cut 2-3 open to the pit (larva/frass = grafolita), destroy affected fruit, check shoot tips. Buy traps this week
 
 ### Ciruelo — air layer on broken branch (2026-11-17)
 Branch broke under fruit load; air-layer wrap set (bottle + soil + black nylon). Details in [fruit_trees.md](fruit_trees.md).
